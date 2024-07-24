@@ -11,9 +11,8 @@ exports.sendEmail = async (req, res) => {
       company,
       password,
       intro,
+      replyTo,
     } = req.body;
-
-    console.log(emailFrom, password);
 
     for (const email of emailTo) {
       await new Email(
@@ -24,7 +23,8 @@ exports.sendEmail = async (req, res) => {
         email,
         company,
         password,
-        intro
+        intro,
+        replyTo
       ).send();
     }
 

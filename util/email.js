@@ -9,7 +9,8 @@ module.exports = class Email {
     emailTo,
     company,
     password,
-    intro
+    intro,
+    replyTo
   ) {
     this.subject = subject;
     this.body = body;
@@ -18,6 +19,8 @@ module.exports = class Email {
     this.to = emailTo;
     this.password = password;
     this.intro = intro;
+    this.emailFrom = emailFrom;
+    this.replyTo = replyTo;
   }
 
   newTransport() {
@@ -28,7 +31,7 @@ module.exports = class Email {
         ciphers: "SSLv3",
       },
       auth: {
-        user: this.from,
+        user: this.emailFrom,
         pass: this.password,
       },
     });
@@ -40,7 +43,8 @@ module.exports = class Email {
       from: this.from,
       to: this.to,
       subject: this.subject,
-      text: `${this.intro}\n${this.body}\n${this.footer}`,
+      text: `${this.intro}\n\n${this.body}\n\n${this.footer}`,
+      replyTo: this.replyTo,
     };
 
     // 3) Create a transport and send email
